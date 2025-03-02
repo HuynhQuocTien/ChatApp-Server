@@ -12,6 +12,8 @@ class UserManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
+        if not user.id:
+            raise ValueError('User ID not generated, save operation might have failed')
         return user
 
     # def create_super(self, email, password, **extra_field):

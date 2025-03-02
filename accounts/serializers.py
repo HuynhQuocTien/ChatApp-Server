@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
         return user
     class Meta:
         model = get_user_model()
-        fields = ['email',"password", 'first_name', 'last_name']
+        fields = ['id','email',"password", 'first_name', 'last_name']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -52,7 +52,10 @@ class LoginSerializer(serializers.Serializer):
         if not user.is_active:
             raise serializers.ValidationError("This user has been deactivated.")
 
+        # return {
+        #     "email": user.email,
+        #     "id": user.id
+        # }
         return {
-            "email": user.email,
-            "id": user.id
+            "user": user
         }
